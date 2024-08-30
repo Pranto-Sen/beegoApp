@@ -1,0 +1,39 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Config files
+/conf/app.conf
+
+# VS Code files
+.vscode/
+
+# Dependency directories
+vendor/
+beegoApp
+
+# Ignore Go module files
+
+
+# Ignore the Go cache
+go/pkg/
+go/bin/
+go/build/
+go/src/
+
+# Environment file
+.env
+
+# Ignore IDE specific files
+.idea/
+*.swp
+
+# Ignore logs and temporary files
+*.log
+*.tmp
+
