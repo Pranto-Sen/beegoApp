@@ -26,8 +26,6 @@ go/bin/
 go/build/
 go/src/
 
-# Environment file
-.env
 
 # Ignore IDE specific files
 .idea/

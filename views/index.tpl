@@ -11,7 +11,6 @@
 <body>
     <div class="container">
         <main id="mainContent">
-            <!-- Navigation Menu -->
             <nav class="nav-menu">
                 <button id="votingBtn" class="active">
                     <i class="fas fa-sort"></i>
@@ -29,7 +28,6 @@
                 </button>
             </nav>
 
-            <!-- Voting Section -->
             <div id="votingSection">
                 <img id="catImage" src="" alt="Cat Image">
                 <div class="buttons">
@@ -51,25 +49,19 @@
                 </div>
             </div>
 
-            <!-- Breeds Section -->
             <div id="breedsSection" style="display:none;">
                 <select id="breedSelect">
                     <option value="">Select a breed</option>
-                    <!-- Populate this dropdown with breed options dynamically -->
                 </select>
 
-                <!-- Swiper -->
                 <div class="swiper mySwiper">
                     <div class="swiper-wrapper" id="carouselInner"></div>
-                    <!-- Pagination Dots -->
                     <div class="swiper-pagination"></div>
                 </div>
 
-                <!-- Breed Info -->
                 <div id="breedInfo"></div>
             </div>
 
-            <!-- Favourites Section -->
             <div id="favsSection" class="section">
                 <div id="viewButtons">
                     <button id="gridViewBtn">
@@ -80,13 +72,12 @@
                     </button>
                 </div>
                 <div id="favsContainer" class="favs-grid">
-                    <!-- Favourite images will be displayed here -->
                 </div>
             </div>
         </main>
     </div>
 
-    <!-- Scripts -->
+
     <script src="/static/js/app.js"></script>
     <script src="/static/js/voting.js"></script>
     <script src="/static/js/breeds.js"></script>
