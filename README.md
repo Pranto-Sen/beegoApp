@@ -9,8 +9,20 @@ Make sure you have the following installed:
 - Git
 
 ## Installation
+1. **Install Go**
 
-1. **Clone the repository:**
+    - Ensure that Go is installed on the new device. You can check if Go is installed and verify the version with: `go version`
+    - If Go is not installed, download and install it from the official Go website.
+
+2. **Install Beego and Bee CLI**
+
+    - Install Beego and the Bee CLI tool globally if they are not already installed:
+
+    ```bash
+    go get github.com/beego/beego/v2
+    go install github.com/beego/bee/v2@latest
+    ```
+3. **Clone the repository:**
     ```
     git clone https://github.com/Pranto-Sen/beegoApp
     cd beegoApp
@@ -33,7 +45,7 @@ Make sure you have the following installed:
     ```
 
 
-2. **Create config file**
+4. **Create config file**
      In the root directory, under the `conf` folder, create a file  named  `app.conf`. In this file, set your `catapi_key` as follows.
 
     ```bash
@@ -43,13 +55,17 @@ Make sure you have the following installed:
     catapi_key = your_api_key
     ```
 
-3. **Install the dependencies:**
-    ```
-    go mod tidy
-    ```
+5. **Install Project Dependencies**
+    - Fetch and install all project dependencies: `go get ./...`
+    
+    - Then tidy up the go.mod file: `go mod tidy`
 
-4. **Running the Application**
+    
+
+6. **Running the Application**
 
     ```
     bee run
     ```
+
+7. You can access the application in your browser at http://localhost:8080.
