@@ -9,7 +9,7 @@ Make sure you have the following installed:
 - Git
 
 ## Installation
-1. **Install Go**
+<!-- 1. **Install Go**
 
     - Ensure that Go is installed on the new device. You can check if Go is installed and verify the version with: `go version`
     - If Go is not installed, download and install it from the official Go website.
@@ -21,8 +21,8 @@ Make sure you have the following installed:
     ```bash
     go get github.com/beego/beego/v2
     go install github.com/beego/bee/v2@latest
-    ```
-3. **Clone the repository:**
+    ``` -->
+1. **Clone the repository:**
     ```
     git clone https://github.com/Pranto-Sen/beegoApp
     cd beegoApp
@@ -56,7 +56,7 @@ Make sure you have the following installed:
         ```
 
 5. **Install Project Dependencies**
-    - Fetch and install all project dependencies: `go get ./...`
+    <!-- - Fetch and install all project dependencies: `go get ./...` -->
     
     - Then tidy up the go.mod file: `go mod tidy`
 
