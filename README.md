@@ -46,14 +46,14 @@ Make sure you have the following installed:
 
 
 4. **Create config file**
-     In the root directory, under the `conf` folder, create a file  named  `app.conf`. In this file, set your `catapi_key` as follows.
+    - In the root directory, under the `conf` folder, create a file  named  `app.conf`. In this file, set your `catapi_key` as follows.
 
-    ```bash
-    appname = beegoApp
-    httpport = 8080
-    runmode = dev
-    catapi_key = your_api_key
-    ```
+        ```bash
+        appname = beegoApp
+        httpport = 8080
+        runmode = dev
+        catapi_key = your_api_key
+        ```
 
 5. **Install Project Dependencies**
     - Fetch and install all project dependencies: `go get ./...`
