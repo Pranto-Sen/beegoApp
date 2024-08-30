@@ -1,5 +1,3 @@
-// breeds.js
-
 document.addEventListener('DOMContentLoaded', function () {
     const breedSelect = document.getElementById('breedSelect');
     const breedInfo = document.getElementById('breedInfo');
@@ -88,7 +86,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Initial load
     if (breedSelect.style.display !== 'none') {
         fetchBreeds();
     }

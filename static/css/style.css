@@ -199,9 +199,6 @@ button:active {
     transition: transform 0.3s ease;
 }
 
-/* .favs-grid img:hover, .favs-list img:hover {
-    transform: scale(1.05);
-} */
 
 /* Image Container for Favorites with Remove Button */
 .image-container {

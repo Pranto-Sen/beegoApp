@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', function () {
     const votingBtn = document.getElementById('votingBtn');
     const breedsBtn = document.getElementById('breedsBtn');
@@ -12,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
         breedsSection.style.display = 'none';
         favsSection.style.display = 'none';
         section.style.display = 'block';
-        history.pushState(null, '', path); // Update the route without refreshing
+        history.pushState(null, '', path); 
     }
 
     function setActiveButton(button) {
@@ -35,7 +34,6 @@ document.addEventListener('DOMContentLoaded', function () {
         showSection(favsSection, '/favourite');
     });
 
-    // Show the correct section based on the current URL path
     const path = window.location.pathname;
     if (path === '/breed') {
         setActiveButton(breedsBtn);

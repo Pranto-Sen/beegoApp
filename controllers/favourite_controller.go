@@ -22,10 +22,6 @@ type Favourite struct {
 	Image     CatImage `json:"image"`
 }
 
-// func (c *FavouriteController) Get() {
-// 	c.TplName = "index.tpl"
-// }
-
 func (c *FavouriteController) AddFavourite() {
 	apiKey, err := beego.AppConfig.String("catapi_key")
 	if err != nil {
@@ -48,31 +44,41 @@ func (c *FavouriteController) AddFavourite() {
 	apiUrl := "https://api.thecatapi.com/v1/favourites"
 	jsonBody, _ := json.Marshal(requestBody)
 
-	req, _ := http.NewRequest("POST", apiUrl, bytes.NewBuffer(jsonBody))
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("x-api-key", apiKey)
+	responseChannel := make(chan *http.Response)
+	errorChannel := make(chan error)
 
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		c.Data["json"] = map[string]interface{}{"error": "Failed to make external API request"}
-		c.ServeJSON()
-		return
-	}
-	defer resp.Body.Close()
+	go func() {
+		req, _ := http.NewRequest("POST", apiUrl, bytes.NewBuffer(jsonBody))
+		req.Header.Set("Content-Type", "application/json")
+		req.Header.Set("x-api-key", apiKey)
 
-	responseBody, _ := io.ReadAll(resp.Body)
-
-	if resp.StatusCode != http.StatusOK {
-		c.Data["json"] = map[string]interface{}{
-			"error":         "External API returned an error",
-			"status_code":   resp.StatusCode,
-			"response_body": string(responseBody),
+		client := &http.Client{}
+		resp, err := client.Do(req)
+		if err != nil {
+			errorChannel <- err
+			return
 		}
-	} else {
-		var result map[string]interface{}
-		json.Unmarshal(responseBody, &result)
-		c.Data["json"] = result
+		responseChannel <- resp
+	}()
+
+	select {
+	case resp := <-responseChannel:
+		defer resp.Body.Close()
+		responseBody, _ := io.ReadAll(resp.Body)
+
+		if resp.StatusCode != http.StatusOK {
+			c.Data["json"] = map[string]interface{}{
+				"error":         "External API returned an error",
+				"status_code":   resp.StatusCode,
+				"response_body": string(responseBody),
+			}
+		} else {
+			var result map[string]interface{}
+			json.Unmarshal(responseBody, &result)
+			c.Data["json"] = result
+		}
+	case err := <-errorChannel:
+		c.Data["json"] = map[string]interface{}{"error": err.Error()}
 	}
 
 	c.ServeJSON()
@@ -88,22 +94,32 @@ func (c *FavouriteController) GetFavourites() {
 
 	fullUrl := fmt.Sprintf("%s?sub_id=%s&limit=%s&page=%s&order=DESC", apiUrl, subID, limit, page)
 
-	client := &http.Client{}
-	req, _ := http.NewRequest("GET", fullUrl, nil)
-	req.Header.Set("x-api-key", apiKey)
-	resp, err := client.Do(req)
-	if err != nil {
+	responseChannel := make(chan *http.Response)
+	errorChannel := make(chan error)
+
+	go func() {
+		client := &http.Client{}
+		req, _ := http.NewRequest("GET", fullUrl, nil)
+		req.Header.Set("x-api-key", apiKey)
+		resp, err := client.Do(req)
+		if err != nil {
+			errorChannel <- err
+			return
+		}
+		responseChannel <- resp
+	}()
+
+	select {
+	case resp := <-responseChannel:
+		defer resp.Body.Close()
+		body, _ := io.ReadAll(resp.Body)
+		var favourites []Favourite
+		json.Unmarshal(body, &favourites)
+		c.Data["json"] = favourites
+	case err := <-errorChannel:
 		c.Data["json"] = map[string]interface{}{"error": err.Error()}
-		c.ServeJSON()
-		return
 	}
-	defer resp.Body.Close()
 
-	body, _ := io.ReadAll(resp.Body)
-	var favourites []Favourite
-	json.Unmarshal(body, &favourites)
-
-	c.Data["json"] = favourites
 	c.ServeJSON()
 }
 
@@ -112,21 +128,31 @@ func (c *FavouriteController) DeleteFavourite() {
 	favouriteID := c.Ctx.Input.Param(":id")
 	apiUrl := fmt.Sprintf("https://api.thecatapi.com/v1/favourites/%s", favouriteID)
 
-	client := &http.Client{}
-	req, _ := http.NewRequest("DELETE", apiUrl, nil)
-	req.Header.Set("x-api-key", apiKey)
-	resp, err := client.Do(req)
-	if err != nil {
+	responseChannel := make(chan *http.Response)
+	errorChannel := make(chan error)
+
+	go func() {
+		client := &http.Client{}
+		req, _ := http.NewRequest("DELETE", apiUrl, nil)
+		req.Header.Set("x-api-key", apiKey)
+		resp, err := client.Do(req)
+		if err != nil {
+			errorChannel <- err
+			return
+		}
+		responseChannel <- resp
+	}()
+
+	select {
+	case resp := <-responseChannel:
+		defer resp.Body.Close()
+		body, _ := io.ReadAll(resp.Body)
+		var result map[string]interface{}
+		json.Unmarshal(body, &result)
+		c.Data["json"] = result
+	case err := <-errorChannel:
 		c.Data["json"] = map[string]interface{}{"error": err.Error()}
-		c.ServeJSON()
-		return
 	}
-	defer resp.Body.Close()
 
-	body, _ := io.ReadAll(resp.Body)
-	var result map[string]interface{}
-	json.Unmarshal(body, &result)
-
-	c.Data["json"] = result
 	c.ServeJSON()
 }

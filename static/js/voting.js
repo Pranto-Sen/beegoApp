@@ -1,5 +1,3 @@
-// voting.js
-
 document.addEventListener('DOMContentLoaded', function () {
     const votingSection = document.getElementById('votingSection');
     const catImage = document.getElementById('catImage');
@@ -47,11 +45,9 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     }
 
-    // Event listeners for voting buttons
     upvoteBtn.addEventListener('click', fetchCat);
     downvoteBtn.addEventListener('click', fetchCat);
 
-    // Event listener for adding favourite
     favBtn.addEventListener('click', () => {
         if (currentCat) {
            
@@ -60,7 +56,6 @@ document.addEventListener('DOMContentLoaded', function () {
         fetchCat();
     });
 
-    // Initial load
     if (votingSection.style.display !== 'none') {
         fetchCat();
     }

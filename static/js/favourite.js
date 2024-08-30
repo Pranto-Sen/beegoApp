@@ -1,5 +1,3 @@
-// favorites.js
-
 document.addEventListener('DOMContentLoaded', function () {
     const favsContainer = document.getElementById('favsContainer');
     const gridViewBtn = document.getElementById('gridViewBtn');
@@ -9,9 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function showFavourites(view) {
         fetch(`/api/favourites?sub_id=${currentUser}&limit=10&page=0`)
             .then(response => response.json())
-            .then(favs => {
-                // console.log(favs);
-                
+            .then(favs => {        
                 favsContainer.innerHTML = '';
                 favsContainer.className = view === 'grid' ? 'favs-grid' : 'favs-list';
                 favs.forEach(fav => {
@@ -51,11 +47,9 @@ document.addEventListener('DOMContentLoaded', function () {
             .catch(error => console.error('Error removing favourite:', error));
     }
 
-    // Event listeners to toggle views
     gridViewBtn.addEventListener('click', () => showFavourites('grid'));
     listViewBtn.addEventListener('click', () => showFavourites('list'));
 
-    // Initial load
     if (favsContainer.style.display !== 'none') {
         showFavourites('grid');
     }

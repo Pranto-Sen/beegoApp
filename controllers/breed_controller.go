@@ -12,10 +12,6 @@ type BreedController struct {
 	beego.Controller
 }
 
-// func (c *BreedController) Get() {
-// 	c.TplName = "index.tpl"
-// }
-
 func (c *BreedController) GetBreeds() {
 	apiKey, _ := beego.AppConfig.String("catapi_key")
 	apiUrl := "https://api.thecatapi.com/v1/breeds"
